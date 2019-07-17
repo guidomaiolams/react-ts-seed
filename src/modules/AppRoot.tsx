@@ -7,6 +7,7 @@ import { store, history } from './state-mgmt/store';
 
 const Login = lazy(() => import('./views/login'));
 const TodoList = lazy(() => import('./views/todo-list'));
+const TodoDetailPage = lazy(() => import('./views/todo-detail'));
 
 export default class App extends React.Component {
   public render() {
@@ -14,8 +15,33 @@ export default class App extends React.Component {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <Switch>
-            <Route exact={true} path="/" render={() => <Suspense fallback={<p>loading</p>}><Login /></Suspense>} />
-            <Route exact={true} path="/todo-list" render={() => <Suspense fallback={<p>loading</p>}><TodoList /></Suspense>} />
+            <Route
+              exact={true}
+              path="/"
+              render={() => (
+                <Suspense fallback={<p>loading</p>}>
+                  <Login />
+                </Suspense>
+              )}
+            />
+            <Route
+              exact={true}
+              path="/todo-list"
+              render={() => (
+                <Suspense fallback={<p>loading</p>}>
+                  <TodoList />
+                </Suspense>
+              )}
+            />
+            <Route
+              exact={true}
+              path="/todo-list/:id"
+              render={() => (
+                <Suspense fallback={<p>loading</p>}>
+                  <TodoDetailPage />
+                </Suspense>
+              )}
+            />
           </Switch>
         </ConnectedRouter>
       </Provider>

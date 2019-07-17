@@ -1,4 +1,5 @@
 import React, { memo, useMemo, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import { GeneralModel, TodoModel } from '../../models';
 
@@ -8,7 +9,9 @@ export interface ITodoListProps {
 }
 
 const TodoList = ({ todoMap, fetchTodoList }: ITodoListProps) => {
-  useEffect(() => { fetchTodoList(); }, []); // eslint-disable-line
+  useEffect(() => {
+    fetchTodoList();
+  }, []); // eslint-disable-line
 
   const todoList = useMemo(() => Object.values(todoMap), [todoMap]);
   return (
@@ -19,18 +22,20 @@ const TodoList = ({ todoMap, fetchTodoList }: ITodoListProps) => {
             <th>ID</th>
             <th>name</th>
             <th>description</th>
+            <th>details</th>
           </tr>
         </thead>
         <tbody>
-          {
-            todoList.map(todo => (
-              <tr key={todo.id}>
-                <td>{todo.id}</td>
-                <td>{todo.name}</td>
-                <td>{todo.description}</td>
-              </tr>
-            ))
-          }
+          {todoList.map(todo => (
+            <tr key={todo.id}>
+              <td>{todo.id}</td>
+              <td>{todo.name}</td>
+              <td>{todo.description}</td>
+              <td>
+              <Link key={todo.id} to={`/todo-list/${todo.id}`}> See details </Link>
+              </td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
